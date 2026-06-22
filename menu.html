@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="description" content="Crust & Chilly Full Menu — 79 Pure Veg Dishes">
+<meta name="theme-color" content="#D62828">
+<link rel="canonical" href="https://crustandchilly.aitoolcor.com/menu.html">
+<title>Menu | Crust & Chilly</title>
+
+<script>
+(function() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+  }
+  if ('caches' in window) {
+    caches.keys().then(names => names.forEach(n => caches.delete(n)));
+  }
+  if (localStorage.getItem('cc_version') !== '3.0') {
+    localStorage.clear();
+    localStorage.setItem('cc_version', '3.0');
+  }
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Fraunces:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=3.0">
+</head>
+<body class="pg-menu">
+
+<div class="ov" id="cartOv"></div>
+<div class="ov" id="modOv"></div>
+<div class="ov" id="navOv"></div>
+
+<aside class="side-cart" id="sideCart">
+  <div class="sc-head">
+    <div><h3>Your Cart</h3><small id="scItemCount">0 items</small></div>
+    <button class="round-btn" id="scClose">✕</button>
+  </div>
+  <div class="sc-body" id="scBody"></div>
+  <div class="sc-foot" id="scFoot" style="display:none">
+    <div class="sc-row"><span>Subtotal</span><b id="scTotal">₹0</b></div>
+    <a class="cta-btn cta-green w-full" id="scWA" href="#" target="_blank" rel="noopener">Send to WhatsApp →</a>
+    <button class="sc-clear" id="scClear">Empty cart</button>
+  </div>
+</aside>
+
+<div class="detail-modal" id="detailModal">
+  <button class="round-btn modal-x" id="modClose">✕</button>
+  <div id="modBody"></div>
+</div>
+
+<header class="topbar topbar-solid" id="topbar">
+  <div class="container topbar-inner">
+    <a href="index.html" class="brand-link">
+      <div class="brand-icon"><span>C</span></div>
+      <div class="brand-name"><strong>Crust & Chilly</strong><small>MENU</small></div>
+    </a>
+    <nav class="top-nav">
+      <a href="index.html">Home</a>
+      <a href="#" class="active">Menu</a>
+      <a href="index.html#visit">Visit</a>
+    </nav>
+    <div class="top-actions">
+      <button class="action-pill" id="favTrigger" aria-label="Favorites"><span class="ap-icon">♡</span><i class="ap-badge" id="favBadge">0</i></button>
+      <button class="action-pill" id="cartTrigger" aria-label="Cart"><span class="ap-icon">⌘</span><i class="ap-badge" id="cartBadge">0</i></button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mob-nav" id="mobNav">
+    <a href="index.html">🏠 Home</a>
+    <a href="#">📋 Menu</a>
+    <a href="index.html#visit">📍 Visit</a>
+    <a href="https://wa.me/917487980840" class="mn-cta" target="_blank" rel="noopener">💬 Order on WhatsApp</a>
+  </nav>
+</header>
+
+<div class="menu-header">
+  <div class="container">
+    <a href="index.html" class="back-arrow">← Back</a>
+    <span class="eyebrow">Browse</span>
+    <h1>The Complete <span class="title-script">Menu</span></h1>
+    <p>79 carefully crafted dishes · 10 categories · 100% Vegetarian</p>
+  </div>
+</div>
+
+<div class="m-search" id="mSearch">
+  <div class="container">
+    <div class="search-wrap">
+      <span class="s-icon">🔍</span>
+      <input type="search" id="searchIn" placeholder="Search dishes..." autocomplete="off">
+      <button class="s-clear" id="searchClear" style="display:none">×</button>
+    </div>
+    <div class="search-buttons">
+      <button class="sb-btn" id="filterToggle">⚙ Filters</button>
+      <button class="sb-btn" id="favFilter">♡ Favorites</button>
+    </div>
+  </div>
+</div>
+
+<div class="filter-panel" id="filterPanel">
+  <div class="container">
+    <div class="fp-row">
+      <div class="fp-group">
+        <label>Sort</label>
+        <select id="sortSel">
+          <option value="default">Recommended</option>
+          <option value="pl">Price: Low to High</option>
+          <option value="ph">Price: High to Low</option>
+          <option value="r">Highest Rated</option>
+          <option value="az">Name A-Z</option>
+        </select>
+      </div>
+      <div class="fp-group">
+        <label>Price</label>
+        <select id="priceSel">
+          <option value="all">Any Price</option>
+          <option value="0-100">Under ₹100</option>
+          <option value="100-150">₹100 – ₹150</option>
+          <option value="150+">Above ₹150</option>
+        </select>
+      </div>
+      <div class="fp-group">
+        <label>Spice</label>
+        <select id="spiceSel">
+          <option value="all">All Levels</option>
+          <option value="1">🌶️ Mild</option>
+          <option value="2">🌶️🌶️ Medium</option>
+          <option value="3">🌶️🌶️🌶️ Hot</option>
+        </select>
+      </div>
+    </div>
+    <div class="fp-tags">
+      <button class="fp-tag" data-b="Bestseller">🔥 Bestseller</button>
+      <button class="fp-tag" data-b="New">✨ New</button>
+      <button class="fp-tag" data-b="Popular">⭐ Popular</button>
+      <button class="fp-tag" data-b="Must Try">💯 Must Try</button>
+    </div>
+    <button class="fp-clear" id="fpReset">Clear all filters</button>
+  </div>
+</div>
+
+<div class="cat-chip-bar" id="catChipBar">
+  <div class="cat-chip-track">
+    <button class="cat-chip active" data-c="all">All Items</button>
+    <button class="cat-chip" data-c="burgers">🍔 Burgers</button>
+    <button class="cat-chip" data-c="wraps">🌯 Wraps</button>
+    <button class="cat-chip" data-c="fries">🍟 Fries</button>
+    <button class="cat-chip" data-c="sandwiches">🥪 Sandwiches</button>
+    <button class="cat-chip" data-c="tikka-pav">🌭 Tikka Pav</button>
+    <button class="cat-chip" data-c="quick-bites">🧀 Quick Bites</button>
+    <button class="cat-chip" data-c="cold-drinks">🥤 Drinks</button>
+    <button class="cat-chip" data-c="mocktails">🍹 Mocktails</button>
+    <button class="cat-chip" data-c="combos">🍽️ Combos</button>
+    <button class="cat-chip" data-c="chilly-specials">🔥 Chilly</button>
+  </div>
+</div>
+
+<main class="m-main">
+  <div class="container">
+    <div class="m-bar">
+      <span id="menuCount">79 dishes</span>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+    <div class="m-none" id="mNone" style="display:none">
+      <div class="mn-icon">🔍</div>
+      <h3>No dishes match your filters</h3>
+      <p>Try adjusting your search</p>
+      <button class="cta-btn cta-red" onclick="CC.reset()">Reset Filters</button>
+    </div>
+  </div>
+</main>
+
+<footer class="footer" style="padding:30px 0 100px">
+  <div class="container">
+    <div class="ft-bottom"><span>© 2024 Crust & Chilly</span><span>+91 74879 80840</span></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/917487980840" class="float-wa show" id="floatWA" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+<script src="js/script.js?v=3.0"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 — Crust & Chilly</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Fraunces:wght@900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#FBF7F0;color:#1C1C1C;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{text-align:center;max-width:500px}
+.num{font-family:'Fraunces',serif;font-size:8rem;font-weight:900;color:transparent;-webkit-text-stroke:3px #D62828;line-height:1;margin-bottom:10px}
+.emo{font-size:4rem;margin:10px 0;animation:b 2s infinite alternate}
+@keyframes b{to{transform:translateY(-15px) rotate(8deg)}}
+h1{font-family:'Fraunces',serif;font-size:2rem;margin-bottom:12px}
+p{color:#666;margin-bottom:30px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:14px 28px;border-radius:999px;font-weight:700;text-decoration:none;transition:.3s}
+.b1{background:#D62828;color:#fff}
+.b2{background:#fff;color:#1C1C1C;border:2px solid #1C1C1C}
+.btn:hover{transform:translateY(-3px)}
+.cd{margin-top:24px;color:#999;font-size:.85rem}
+.cd b{color:#D62828}
+</style>
+</head>
+<body>
+<div class="box">
+<div class="num">404</div>
+<div class="emo">🍔</div>
+<h1>Page Got Eaten!</h1>
+<p>Looks like this dish isn't on our menu.<br>But many others are!</p>
+<div class="btns">
+<a href="index.html" class="b1 btn">🏠 Go Home</a>
+<a href="menu.html" class="b2 btn">📖 View Menu</a>
+</div>
+<div class="cd">Redirecting in <b id="c">10</b>s...</div>
+</div>
+<script>let c=10;const e=document.getElementById('c');setInterval(()=>{c--;e.textContent=c;if(c<=0)location.href='index.html'},1000);</script>
+</body>
+</html>

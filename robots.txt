@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /clear-cache.html
+Sitemap: https://crustandchilly.aitoolcor.com/sitemap.xml
