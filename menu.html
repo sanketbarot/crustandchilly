@@ -2,33 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta name="description" content="Crust & Chilly Full Menu — 79 Pure Veg Dishes">
-<meta name="theme-color" content="#D62828">
-<link rel="canonical" href="https://crustandchilly.aitoolcor.com/menu.html">
-<title>Menu | Crust & Chilly</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B3A2F">
 
-<script>
-(function() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
-  }
-  if ('caches' in window) {
-    caches.keys().then(names => names.forEach(n => caches.delete(n)));
-  }
-  if (localStorage.getItem('cc_version') !== '3.0') {
-    localStorage.clear();
-    localStorage.setItem('cc_version', '3.0');
-  }
-})();
-</script>
+<title>Full Menu — 79 Vegetarian Dishes | Crust & Chilly Shela</title>
+<meta name="description" content="Browse all 79 vegetarian dishes — Burgers, Wraps, Tikka Pav, Sandwiches, Mocktails & more. Filter by price, spice & category.">
+<meta name="keywords" content="full menu Crust and Chilly, veg menu Shela, burger menu Ahmedabad">
+<meta name="robots" content="index,follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Full Menu — Crust & Chilly">
+<meta property="og:description" content="All 79 vegetarian dishes with filters.">
+<meta property="og:url" content="https://crustandchilly.aitoolcor.com/menu.html">
+
+<link rel="canonical" href="https://crustandchilly.aitoolcor.com/menu.html">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23D2691E'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Georgia' font-weight='900'>C</text></svg>">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Fraunces:wght@500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=3.0">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/menu.css">
 </head>
 <body class="pg-menu">
 
@@ -36,156 +32,220 @@
 <div class="ov" id="modOv"></div>
 <div class="ov" id="navOv"></div>
 
-<aside class="side-cart" id="sideCart">
-  <div class="sc-head">
-    <div><h3>Your Cart</h3><small id="scItemCount">0 items</small></div>
-    <button class="round-btn" id="scClose">✕</button>
-  </div>
-  <div class="sc-body" id="scBody"></div>
-  <div class="sc-foot" id="scFoot" style="display:none">
-    <div class="sc-row"><span>Subtotal</span><b id="scTotal">₹0</b></div>
-    <a class="cta-btn cta-green w-full" id="scWA" href="#" target="_blank" rel="noopener">Send to WhatsApp →</a>
-    <button class="sc-clear" id="scClear">Empty cart</button>
-  </div>
-</aside>
-
-<div class="detail-modal" id="detailModal">
-  <button class="round-btn modal-x" id="modClose">✕</button>
-  <div id="modBody"></div>
-</div>
-
 <header class="topbar topbar-solid" id="topbar">
-  <div class="container topbar-inner">
-    <a href="index.html" class="brand-link">
-      <div class="brand-icon"><span>C</span></div>
-      <div class="brand-name"><strong>Crust & Chilly</strong><small>MENU</small></div>
+  <div class="container topbar-row">
+    <a href="/" class="brand">
+      <span class="brand-mark">C</span>
+      <span class="brand-text">
+        <strong>Crust <em>&amp;</em> Chilly</strong>
+        <small>Full Menu · 79 Dishes</small>
+      </span>
     </a>
-    <nav class="top-nav">
+
+    <nav class="nav-desk">
       <a href="index.html">Home</a>
-      <a href="#" class="active">Menu</a>
+      <a href="menu.html" class="is-active">Menu</a>
+      <a href="index.html#story">Story</a>
       <a href="index.html#visit">Visit</a>
     </nav>
-    <div class="top-actions">
-      <button class="action-pill" id="favTrigger" aria-label="Favorites"><span class="ap-icon">♡</span><i class="ap-badge" id="favBadge">0</i></button>
-      <button class="action-pill" id="cartTrigger" aria-label="Cart"><span class="ap-icon">⌘</span><i class="ap-badge" id="cartBadge">0</i></button>
-      <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+
+    <div class="head-actions">
+      <button class="ic-btn" id="favBtn" aria-label="Favorites">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <i class="badge" id="favBadge">0</i>
+      </button>
+      <button class="ic-btn" id="cartBtn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <i class="badge" id="cartBadge">0</i>
+      </button>
+      <a href="https://wa.me/917487980840" class="cta-pill desk-only" target="_blank" rel="noopener">Order</a>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
-  <nav class="mob-nav" id="mobNav">
-    <a href="index.html">🏠 Home</a>
-    <a href="#">📋 Menu</a>
-    <a href="index.html#visit">📍 Visit</a>
-    <a href="https://wa.me/917487980840" class="mn-cta" target="_blank" rel="noopener">💬 Order on WhatsApp</a>
+
+  <nav class="nav-mob" id="navMob">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Full Menu</a>
+    <a href="index.html#story">Our Story</a>
+    <a href="index.html#visit">Visit Us</a>
+    <a href="https://wa.me/917487980840" target="_blank" rel="noopener" class="mob-wa">💬 WhatsApp Order</a>
   </nav>
 </header>
 
-<div class="menu-header">
+<section class="menu-hero">
   <div class="container">
-    <a href="index.html" class="back-arrow">← Back</a>
-    <span class="eyebrow">Browse</span>
-    <h1>The Complete <span class="title-script">Menu</span></h1>
-    <p>79 carefully crafted dishes · 10 categories · 100% Vegetarian</p>
+    <span class="eyebrow">Complete Selection</span>
+    <h1 class="menu-title">The <em>Full Menu</em></h1>
+    <p class="menu-sub">79 hand-crafted vegetarian dishes. Filter, sort & build your perfect order.</p>
   </div>
-</div>
+</section>
 
-<div class="m-search" id="mSearch">
+<section class="menu-tools">
   <div class="container">
-    <div class="search-wrap">
-      <span class="s-icon">🔍</span>
-      <input type="search" id="searchIn" placeholder="Search dishes..." autocomplete="off">
-      <button class="s-clear" id="searchClear" style="display:none">×</button>
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="search" id="searchIn" placeholder="Search dishes... (e.g. paneer, burger)" autocomplete="off">
+      <button class="search-clear" id="searchClear" hidden>×</button>
     </div>
-    <div class="search-buttons">
-      <button class="sb-btn" id="filterToggle">⚙ Filters</button>
-      <button class="sb-btn" id="favFilter">♡ Favorites</button>
-    </div>
-  </div>
-</div>
 
-<div class="filter-panel" id="filterPanel">
-  <div class="container">
-    <div class="fp-row">
+    <div class="tools-row">
+      <button class="filter-toggle" id="filterToggle">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+        Filters
+      </button>
+      <button class="fav-filter" id="favFilter">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        Favorites
+      </button>
+      <span class="menu-count" id="menuCount"><b>79</b> dishes</span>
+    </div>
+
+    <div class="filter-panel" id="filterPanel">
       <div class="fp-group">
-        <label>Sort</label>
+        <label>Sort by</label>
         <select id="sortSel">
           <option value="default">Recommended</option>
           <option value="pl">Price: Low to High</option>
           <option value="ph">Price: High to Low</option>
-          <option value="r">Highest Rated</option>
-          <option value="az">Name A-Z</option>
+          <option value="r">Top Rated</option>
+          <option value="az">A — Z</option>
         </select>
       </div>
       <div class="fp-group">
         <label>Price</label>
         <select id="priceSel">
-          <option value="all">Any Price</option>
+          <option value="all">All Prices</option>
           <option value="0-100">Under ₹100</option>
           <option value="100-150">₹100 – ₹150</option>
-          <option value="150+">Above ₹150</option>
+          <option value="150-999">Above ₹150</option>
         </select>
       </div>
       <div class="fp-group">
         <label>Spice</label>
         <select id="spiceSel">
           <option value="all">All Levels</option>
-          <option value="1">🌶️ Mild</option>
-          <option value="2">🌶️🌶️ Medium</option>
-          <option value="3">🌶️🌶️🌶️ Hot</option>
+          <option value="1">Mild</option>
+          <option value="2">Medium</option>
+          <option value="3">Hot 🌶️</option>
         </select>
       </div>
+      <div class="fp-group fp-tags-wrap">
+        <label>Tags</label>
+        <div class="fp-tags">
+          <button class="fp-tag" data-b="bestseller">⭐ Bestseller</button>
+          <button class="fp-tag" data-b="popular">🔥 Popular</button>
+          <button class="fp-tag" data-b="new">✨ New</button>
+          <button class="fp-tag" data-b="must">💎 Must Try</button>
+        </div>
+      </div>
+      <button class="fp-reset" id="fpReset">Reset All</button>
     </div>
-    <div class="fp-tags">
-      <button class="fp-tag" data-b="Bestseller">🔥 Bestseller</button>
-      <button class="fp-tag" data-b="New">✨ New</button>
-      <button class="fp-tag" data-b="Popular">⭐ Popular</button>
-      <button class="fp-tag" data-b="Must Try">💯 Must Try</button>
+
+    <div class="cat-chips-wrap">
+      <div class="cat-chips" id="catChips">
+        <button class="cat-chip active" data-c="all">All <i>79</i></button>
+        <button class="cat-chip" data-c="burgers">🍔 Burgers <i>12</i></button>
+        <button class="cat-chip" data-c="wraps">🌯 Wraps <i>8</i></button>
+        <button class="cat-chip" data-c="fries">🍟 Fries <i>6</i></button>
+        <button class="cat-chip" data-c="sandwiches">🥪 Sandwiches <i>10</i></button>
+        <button class="cat-chip" data-c="tikka-pav">🌭 Tikka Pav <i>7</i></button>
+        <button class="cat-chip" data-c="quick-bites">🧀 Quick Bites <i>9</i></button>
+        <button class="cat-chip" data-c="cold-drinks">🥤 Cold Drinks <i>8</i></button>
+        <button class="cat-chip" data-c="mocktails">🍹 Mocktails <i>6</i></button>
+        <button class="cat-chip" data-c="combos">🍽️ Combos <i>5</i></button>
+        <button class="cat-chip" data-c="chilly-specials">🔥 Chilly <i>8</i></button>
+      </div>
     </div>
-    <button class="fp-clear" id="fpReset">Clear all filters</button>
   </div>
-</div>
+</section>
 
-<div class="cat-chip-bar" id="catChipBar">
-  <div class="cat-chip-track">
-    <button class="cat-chip active" data-c="all">All Items</button>
-    <button class="cat-chip" data-c="burgers">🍔 Burgers</button>
-    <button class="cat-chip" data-c="wraps">🌯 Wraps</button>
-    <button class="cat-chip" data-c="fries">🍟 Fries</button>
-    <button class="cat-chip" data-c="sandwiches">🥪 Sandwiches</button>
-    <button class="cat-chip" data-c="tikka-pav">🌭 Tikka Pav</button>
-    <button class="cat-chip" data-c="quick-bites">🧀 Quick Bites</button>
-    <button class="cat-chip" data-c="cold-drinks">🥤 Drinks</button>
-    <button class="cat-chip" data-c="mocktails">🍹 Mocktails</button>
-    <button class="cat-chip" data-c="combos">🍽️ Combos</button>
-    <button class="cat-chip" data-c="chilly-specials">🔥 Chilly</button>
-  </div>
-</div>
-
-<main class="m-main">
+<section class="menu-section">
   <div class="container">
-    <div class="m-bar">
-      <span id="menuCount">79 dishes</span>
-    </div>
     <div class="menu-grid" id="menuGrid"></div>
-    <div class="m-none" id="mNone" style="display:none">
-      <div class="mn-icon">🔍</div>
-      <h3>No dishes match your filters</h3>
-      <p>Try adjusting your search</p>
-      <button class="cta-btn cta-red" onclick="CC.reset()">Reset Filters</button>
+    <div class="no-results" id="mNone" hidden>
+      <div class="nr-emoji">🔍</div>
+      <h3>No dishes found</h3>
+      <p>Try a different filter or search term.</p>
+      <button class="btn btn-spice" id="nrReset">Reset Filters</button>
     </div>
   </div>
-</main>
+</section>
 
-<footer class="footer" style="padding:30px 0 100px">
+<section class="cta-strip">
+  <div class="container cta-strip-inner">
+    <div>
+      <h2>Ready to <em>order?</em></h2>
+      <p>Your cart is just one tap away.</p>
+    </div>
+    <a href="https://wa.me/917487980840" class="btn btn-light btn-lg" target="_blank" rel="noopener">Order on WhatsApp →</a>
+  </div>
+</section>
+
+<footer class="footer">
   <div class="container">
-    <div class="ft-bottom"><span>© 2024 Crust & Chilly</span><span>+91 74879 80840</span></div>
+    <div class="ft-main">
+      <div class="ft-brand">
+        <a href="/" class="brand">
+          <span class="brand-mark">C</span>
+          <span class="brand-text">
+            <strong>Crust <em>&amp;</em> Chilly</strong>
+            <small>Shela · Est. 2024</small>
+          </span>
+        </a>
+        <p>Hand-crafted vegetarian comfort food. Open 12 PM – 3 AM in Shela.</p>
+      </div>
+      <div class="ft-col">
+        <h4><em>Explore</em></h4>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="index.html#story">Story</a>
+      </div>
+      <div class="ft-col">
+        <h4><em>Contact</em></h4>
+        <a href="tel:+917487980840">+91 74879 80840</a>
+        <a href="https://wa.me/917487980840" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2024 Crust & Chilly</span>
+      <span>Made with ♥ in Shela</span>
+    </div>
   </div>
 </footer>
 
-<a href="https://wa.me/917487980840" class="float-wa show" id="floatWA" target="_blank" rel="noopener" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<a href="https://wa.me/917487980840" class="float-wa" id="floatWA" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.3.2-.6.1-1.3-.5-2.4-1.5c-.9-.8-1.5-1.8-1.7-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5l.3-.5c.1-.2.1-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2 .9 2.8.9 3.8.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3M12 22a10 10 0 01-5-1.4l-3.6 1L4.4 18A10 10 0 1112 22m0-20a10 10 0 00-8.5 15.3L2 23l5.8-1.5A10 10 0 1012 2"/></svg>
 </a>
 <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
 
-<script src="js/script.js?v=3.0"></script>
+<!-- CART DRAWER (with customer name) -->
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cd-head">
+    <div><h3>Your <em>Cart</em></h3><small id="cdCount">0 items</small></div>
+    <button class="rb" id="cdClose" aria-label="Close">×</button>
+  </div>
+  <div class="cd-body" id="cdBody"></div>
+  <div class="cd-foot" id="cdFoot" hidden>
+    <div class="cd-name-wrap" id="cdNameWrap">
+      <label for="cdNameInput">👤 Your Name</label>
+      <input type="text" id="cdNameInput" class="cd-name-input" placeholder="Enter your name (required)" maxlength="50" autocomplete="name">
+      <div class="cd-name-err" id="cdNameErr">⚠ Please enter your name to continue</div>
+    </div>
+    <div class="cd-total"><span>Subtotal</span><b id="cdTotal">₹0</b></div>
+    <a class="btn btn-wa btn-full" id="cdWA" href="#" target="_blank" rel="noopener">Send to WhatsApp →</a>
+    <button class="cd-clear" id="cdClear">Empty cart</button>
+  </div>
+</aside>
+
+<div class="modal" id="modal">
+  <button class="rb mod-x" id="modClose">×</button>
+  <div id="modBody"></div>
+</div>
+
+<script src="js/data.js" defer></script>
+<script src="js/shared.js" defer></script>
+<script src="js/menu.js" defer></script>
 </body>
 </html>

@@ -1,8 +1,41 @@
 {
-  "name": "Crust & Chilly",
-  "short_name": "C&C",
+  "name": "Crust & Chilly — Premium Veg Restaurant",
+  "short_name": "Crust & Chilly",
+  "description": "79 hand-crafted vegetarian dishes. Open till 3 AM in Shela, Ahmedabad.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FBF7F0",
-  "theme_color": "#D62828"
+  "orientation": "portrait",
+  "background_color": "#F7F1E8",
+  "theme_color": "#1B3A2F",
+  "lang": "en-IN",
+  "scope": "/",
+  "categories": ["food", "lifestyle"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='48' fill='%23D2691E'/%3E%3Ctext x='96' y='135' font-size='115' text-anchor='middle' fill='white' font-family='Georgia' font-weight='900' font-style='italic'%3EC%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%23D2691E'/%3E%3Ctext x='256' y='360' font-size='305' text-anchor='middle' fill='white' font-family='Georgia' font-weight='900' font-style='italic'%3EC%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Full Menu",
+      "short_name": "Menu",
+      "url": "/menu.html",
+      "description": "Browse all 79 dishes"
+    },
+    {
+      "name": "Order on WhatsApp",
+      "short_name": "Order",
+      "url": "https://wa.me/917487980840",
+      "description": "Quick WhatsApp order"
+    }
+  ]
 }

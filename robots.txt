@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /clear-cache.html
+Disallow: /404.html
+
 Sitemap: https://crustandchilly.aitoolcor.com/sitemap.xml

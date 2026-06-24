@@ -3,38 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>404 — Crust & Chilly</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Fraunces:wght@900&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0F0F12">
+<meta name="robots" content="noindex,follow">
+<title>Page Not Found — Crust & Chilly</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23FF4757'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Georgia' font-weight='900'>C</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@0,900;1,500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:#FBF7F0;color:#1C1C1C;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.box{text-align:center;max-width:500px}
-.num{font-family:'Fraunces',serif;font-size:8rem;font-weight:900;color:transparent;-webkit-text-stroke:3px #D62828;line-height:1;margin-bottom:10px}
-.emo{font-size:4rem;margin:10px 0;animation:b 2s infinite alternate}
-@keyframes b{to{transform:translateY(-15px) rotate(8deg)}}
-h1{font-family:'Fraunces',serif;font-size:2rem;margin-bottom:12px}
-p{color:#666;margin-bottom:30px}
-.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:14px 28px;border-radius:999px;font-weight:700;text-decoration:none;transition:.3s}
-.b1{background:#D62828;color:#fff}
-.b2{background:#fff;color:#1C1C1C;border:2px solid #1C1C1C}
-.btn:hover{transform:translateY(-3px)}
-.cd{margin-top:24px;color:#999;font-size:.85rem}
-.cd b{color:#D62828}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#FFF8F0;color:#0F0F12;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  overflow:hidden;
+  position:relative;
+}
+body::before,body::after{
+  content:'';position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  z-index:0;
+}
+body::before{
+  width:500px;height:500px;
+  background:radial-gradient(circle,#FF4757,transparent 70%);
+  opacity:.3;top:-15%;right:-10%;
+}
+body::after{
+  width:400px;height:400px;
+  background:radial-gradient(circle,#FFA94D,transparent 70%);
+  opacity:.3;bottom:-15%;left:-10%;
+}
+.box{
+  text-align:center;
+  max-width:520px;
+  position:relative;z-index:1;
+}
+.big-num{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(7rem,22vw,12rem);
+  font-weight:900;
+  line-height:.85;
+  background:linear-gradient(135deg,#FF4757,#FFA94D);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:10px;
+  letter-spacing:-6px;
+}
+.emoji{font-size:3.4rem;margin-bottom:14px;animation:wobble 3s ease-in-out infinite}
+@keyframes wobble{
+  0%,100%{transform:rotate(-5deg)}
+  50%{transform:rotate(5deg)}
+}
+h1{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(1.6rem,4vw,2.2rem);
+  font-weight:900;margin-bottom:12px;
+  letter-spacing:-1px;
+}
+h1 em{
+  font-style:italic;font-weight:500;
+  color:#FF4757;
+}
+p{
+  color:#6B6B7B;font-size:1rem;
+  line-height:1.6;margin-bottom:28px;
+}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 24px;border-radius:999px;
+  font-weight:600;font-size:.9rem;
+  text-decoration:none;
+  transition:all .3s ease;
+}
+.btn-coral{
+  background:linear-gradient(135deg,#FF4757,#FFA94D);
+  color:#fff;
+  box-shadow:0 10px 30px rgba(255,71,87,.3);
+}
+.btn-coral:hover{transform:translateY(-3px);box-shadow:0 14px 35px rgba(255,71,87,.4)}
+.btn-ghost{
+  background:transparent;color:#0F0F12;
+  border:2px solid #0F0F12;
+}
+.btn-ghost:hover{background:#0F0F12;color:#FFF8F0;transform:translateY(-3px)}
 </style>
 </head>
 <body>
 <div class="box">
-<div class="num">404</div>
-<div class="emo">🍔</div>
-<h1>Page Got Eaten!</h1>
-<p>Looks like this dish isn't on our menu.<br>But many others are!</p>
-<div class="btns">
-<a href="index.html" class="b1 btn">🏠 Go Home</a>
-<a href="menu.html" class="b2 btn">📖 View Menu</a>
+  <div class="big-num">404</div>
+  <div class="emoji">🍔</div>
+  <h1>This dish isn't on <em>our menu</em></h1>
+  <p>The page you're looking for seems to be missing. But don't worry — there's plenty of delicious stuff waiting for you.</p>
+  <div class="btns">
+    <a href="/" class="btn btn-coral">← Back Home</a>
+    <a href="/menu.html" class="btn btn-ghost">Browse Menu →</a>
+  </div>
 </div>
-<div class="cd">Redirecting in <b id="c">10</b>s...</div>
-</div>
-<script>let c=10;const e=document.getElementById('c');setInterval(()=>{c--;e.textContent=c;if(c<=0)location.href='index.html'},1000);</script>
 </body>
 </html>
