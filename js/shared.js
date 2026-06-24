@@ -198,15 +198,14 @@ function buildWALink(total) {
 
   cart.forEach(c => {
     const item = ITEMS.find(i => i.id === c.id);
-    if (item) m += '• ' + item.n + ' × ' + c.q + ' — ₹' + (item.p * c.q) + '\n';
+    if (item) m += '• ' + item.n + ' × ' + c.q + '\n';
   });
 
-  m += '\n*Total: ₹' + total + '*\n\n';
-  
+  m += '\n';
   if (name) {
     m += 'Order Name: *' + name + '*\n';
   }
-  m += 'Please confirm. Thank you! 🙏';
+  m += 'Please confirm price & availability. Thank you! 🙏';
 
   wa.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(m);
 }
