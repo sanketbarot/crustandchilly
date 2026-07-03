@@ -1,6 +1,20 @@
 User-agent: *
 Allow: /
-Disallow: /clear-cache.html
-Disallow: /404.html
+Disallow: /admin/
+Disallow: /private/
 
 Sitemap: https://crustandchilly.aitoolcor.com/sitemap.xml
+
+Crawl-delay: 1
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
