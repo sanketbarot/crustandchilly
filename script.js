@@ -372,13 +372,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const navOverlay = document.getElementById('navOverlay');
     const navMenuClose = document.getElementById('navMenuClose');
     
-    console.log('Hamburger found:', hamburger); // Debug
-    console.log('NavMenu found:', navMenu); // Debug
-    
     function closeMenu() {
         if (hamburger) hamburger.classList.remove('active');
         if (navMenu) navMenu.classList.remove('active');
-        if (navOverlay) navOverlay.classList.add('hidden-overlay');
         if (navOverlay) navOverlay.classList.remove('active');
         document.body.classList.remove('menu-open');
         document.body.style.overflow = '';
@@ -406,10 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (hamburger) {
         hamburger.addEventListener('click', toggleMenu);
-        hamburger.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            toggleMenu(e);
-        });
     }
     
     // Close on nav link click
@@ -660,12 +652,3 @@ const dateInput = $('date');
 if (dateInput) {
     dateInput.min = new Date().toISOString().split('T')[0];
 }
-
-// ==================
-// PREVENT HORIZONTAL SCROLL
-// ==================
-window.addEventListener('scroll', () => {
-    if (window.scrollX !== 0) {
-        window.scrollTo(0, window.scrollY);
-    }
-}, { passive: true });

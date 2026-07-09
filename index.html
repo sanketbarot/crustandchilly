@@ -130,7 +130,7 @@
         <ul class="nav-menu" id="navMenu">
             <li class="nav-menu-top">
                 <div class="nav-menu-brand">Crust <em>&</em> Chilly</div>
-                <button type="button" class="nav-menu-close" id="navMenuClose" aria-label="Close menu" onclick="closeMobileMenu()">
+                <button type="button" class="nav-menu-close" id="navMenuClose" aria-label="Close menu">
                     <i class="fas fa-times"></i>
                 </button>
             </li>
@@ -154,71 +154,13 @@
         <a href="tel:9664870840" class="nav-cta">
             <i class="fas fa-phone"></i> Order Now
         </a>
-        <button type="button" class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+        <button type="button" class="hamburger" id="hamburger" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
     </div>
 </nav>
 
-<div class="nav-overlay" id="navOverlay" onclick="closeMobileMenu()"></div>
-
-<!-- ============================================
-     INLINE HAMBURGER SCRIPT - GUARANTEED WORKING
-     ============================================ -->
-<script>
-function toggleMobileMenu() {
-    var hamburger = document.getElementById('hamburger');
-    var navMenu = document.getElementById('navMenu');
-    var navOverlay = document.getElementById('navOverlay');
-    
-    if (hamburger.classList.contains('active')) {
-        closeMobileMenu();
-    } else {
-        hamburger.classList.add('active');
-        navMenu.classList.add('active');
-        if (navOverlay) navOverlay.classList.add('active');
-        document.body.classList.add('menu-open');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeMobileMenu() {
-    var hamburger = document.getElementById('hamburger');
-    var navMenu = document.getElementById('navMenu');
-    var navOverlay = document.getElementById('navOverlay');
-    
-    if (hamburger) hamburger.classList.remove('active');
-    if (navMenu) navMenu.classList.remove('active');
-    if (navOverlay) navOverlay.classList.remove('active');
-    document.body.classList.remove('menu-open');
-    document.body.style.overflow = '';
-}
-
-// Close menu when nav links clicked
-document.addEventListener('DOMContentLoaded', function() {
-    var navLinks = document.querySelectorAll('.nav-menu .nav-link');
-    for (var i = 0; i < navLinks.length; i++) {
-        navLinks[i].addEventListener('click', function() {
-            setTimeout(closeMobileMenu, 150);
-        });
-    }
-    
-    var mobileCta = document.querySelector('.mobile-cta-btn');
-    if (mobileCta) mobileCta.addEventListener('click', function() {
-        setTimeout(closeMobileMenu, 150);
-    });
-    
-    var mobileWa = document.querySelector('.mobile-wa-btn');
-    if (mobileWa) mobileWa.addEventListener('click', function() {
-        setTimeout(closeMobileMenu, 150);
-    });
-    
-    // ESC key to close
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' || e.keyCode === 27) closeMobileMenu();
-    });
-});
-</script>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section class="hero" id="home">
     <div class="hero-bg"></div>
