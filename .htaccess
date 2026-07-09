@@ -1,17 +1,46 @@
+# Crust & Chilly - Production .htaccess
+# Version 3.0
+
 RewriteEngine On
 
-# Force HTTPS
+# ========================================
+# FORCE HTTPS
+# ========================================
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# GZIP COMPRESSION
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript application/json image/svg+xml
+# ========================================
+# MIME TYPES
+# ========================================
+<IfModule mod_mime.c>
+    AddType application/xml .xml
+    AddType application/manifest+json .webmanifest
+    AddType application/json .json
+    AddType image/svg+xml .svg
+    AddType image/webp .webp
+    AddType font/woff2 .woff2
+    AddType text/cache-manifest .appcache
 </IfModule>
 
+# ========================================
+# GZIP COMPRESSION
+# ========================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml application/manifest+json
+    AddOutputFilterByType DEFLATE font/woff font/woff2 application/font-woff
+</IfModule>
+
+# ========================================
 # BROWSER CACHING
+# ========================================
 <IfModule mod_expires.c>
     ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    
+    # Images
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
@@ -19,33 +48,71 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS & JS
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType text/javascript "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
+    
+    # Fonts
     ExpiresByType font/ttf "access plus 1 year"
     ExpiresByType font/woff "access plus 1 year"
     ExpiresByType font/woff2 "access plus 1 year"
-    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType application/font-woff "access plus 1 year"
+    
+    # HTML & Data
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType application/xml "access plus 0 seconds"
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType application/manifest+json "access plus 1 week"
 </IfModule>
 
+# ========================================
 # SECURITY HEADERS
+# ========================================
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(self), microphone=(), camera=()"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    
+    Header unset ETag
 </IfModule>
+FileETag None
 
+# ========================================
 # CUSTOM ERROR PAGES
-ErrorDocument 404 /index.html
+# ========================================
+ErrorDocument 404 /404.html
 ErrorDocument 403 /index.html
 ErrorDocument 500 /index.html
 
+# ========================================
 # DISABLE DIRECTORY BROWSING
+# ========================================
 Options -Indexes
 
-# PROTECT FILES
+# ========================================
+# PROTECT SENSITIVE FILES
+# ========================================
 <FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(htaccess|htpasswd|env|log|md|json)$">
+    Require all denied
+</FilesMatch>
+
+# Allow specific JSON files
+<FilesMatch "^(manifest\.json)$">
+    Require all granted
+</FilesMatch>
+
+# ========================================
+# ALLOW SITEMAP & ROBOTS
+# ========================================
+<FilesMatch "(sitemap\.xml|robots\.txt)$">
+    Require all granted
 </FilesMatch>

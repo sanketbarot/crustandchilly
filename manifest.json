@@ -1,13 +1,15 @@
 {
   "name": "Crust & Chilly - Premium Veg Restaurant",
   "short_name": "Crust & Chilly",
-  "description": "Shela's most-loved premium vegetarian restaurant. 79 hand-crafted dishes. Open till 12 AM.",
+  "description": "Shela's most-loved premium vegetarian restaurant. 90+ hand-crafted dishes. Open till 12 AM.",
   "start_url": "/",
+  "id": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#FDFAF3",
   "theme_color": "#2B1810",
   "orientation": "portrait",
-  "categories": ["food", "restaurant"],
+  "categories": ["food", "restaurant", "lifestyle"],
   "lang": "en-IN",
   "dir": "ltr",
   "icons": [
@@ -15,29 +17,41 @@
       "src": "images/logo.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "images/logo.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
     {
-      "name": "Call Now",
-      "short_name": "Call",
-      "description": "Call to order",
-      "url": "tel:9664870840",
-      "icons": [{ "src": "images/logo.png", "sizes": "96x96" }]
-    },
-    {
       "name": "View Menu",
       "short_name": "Menu",
-      "description": "Browse all 79 dishes",
+      "description": "Browse all 90+ dishes",
       "url": "/#menu",
-      "icons": [{ "src": "images/logo.png", "sizes": "96x96" }]
+      "icons": [{ "src": "images/logo.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Get in touch with Crust & Chilly",
+      "url": "/#contact",
+      "icons": [{ "src": "images/logo.png", "sizes": "96x96", "type": "image/png" }]
     }
   ]
 }

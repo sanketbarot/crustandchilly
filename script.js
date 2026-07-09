@@ -1,30 +1,36 @@
-// ==================
-// SMOOTH SCROLL FIX
-// ==================
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const target = document.querySelector(targetId);
-            if (target) {
-                e.preventDefault();
-                const navbar = document.querySelector('.navbar');
-                const navHeight = navbar ? navbar.offsetHeight : 80;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-});
+/* ==========================================
+   CRUST & CHILLY - PRODUCTION SCRIPT
+   Version 4.0 - All Bugs Fixed
+   90+ Dishes | 100% Pure Veg
+   ========================================== */
+'use strict';
 
 // ==================
-// MENU DATA (79 Dishes)
+// HELPERS
+// ==================
+const $ = (id) => document.getElementById(id);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+function escapeHtml(str) {
+    if (typeof str !== 'string') return '';
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    return str.replace(/[&<>"']/g, m => map[m]);
+}
+
+function debounce(fn, delay = 200) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
+function vegBadgeHTML() {
+    return '<div class="card-veg-mark"><span class="veg-square"><span class="veg-circle"></span></span></div>';
+}
+
+// ==================
+// MENU DATA (90+ Dishes)
 // ==================
 const menuData = {
     burgers: [
@@ -39,17 +45,27 @@ const menuData = {
         { name: "Pizzeria Burger", subCat: "Signature", price: "₹119", bogo: true, spice: 2, desc: "Pizza meets burger magic" },
         { name: "Indian Style Burger", subCat: "Signature", price: "₹129", bogo: true, spice: 3, desc: "Bold desi flavors" },
         { name: "Afghani Burger", subCat: "Signature", price: "₹129", bogo: true, spice: 2, desc: "Creamy afghani goodness" },
-        { name: "Hot & Spicy Chilly Garlic Burger", subCat: "Premium", price: "₹129", bogo: true, spice: 3, desc: "Bold chilli garlic punch" },
-        { name: "Crust & Chilly Special Burger", subCat: "Premium", price: "₹159", bogo: true, spice: 3, desc: "Our signature masterpiece" }
+        { name: "Hot & Spicy Chilli Garlic Burger", subCat: "Signature", price: "₹129", bogo: true, spice: 3, desc: "Bold chilli garlic punch" },
+        { name: "Crust & Chilly Special Burger", subCat: "Signature", price: "₹149", bogo: true, spice: 3, desc: "Our signature masterpiece" }
     ],
-    cheeseBlast: [
-        { name: "Cheese Blast Aloo Tikki", subCat: "Cheese Blast", price: "₹129", bogo: true, spice: 2, desc: "Molten cheese overload" },
-        { name: "Cheese Blast Peri Peri", subCat: "Cheese Blast", price: "₹139", bogo: true, spice: 3, desc: "Spicy meets cheesy" },
-        { name: "Cheese Blast Tandoori", subCat: "Cheese Blast", price: "₹139", bogo: true, spice: 3, desc: "Smoky cheese delight" },
-        { name: "Cheese Blast Achari Masti", subCat: "Cheese Blast", price: "₹139", bogo: true, spice: 3, desc: "Tangy cheese fusion" },
-        { name: "Cheese Blast Spicy Schezwan", subCat: "Cheese Blast", price: "₹149", bogo: true, spice: 3, desc: "Cheesy schezwan magic" },
-        { name: "Cheese Blast Hot & Spicy Chilly Garlic", subCat: "Cheese Blast", price: "₹149", bogo: true, spice: 3, desc: "Ultimate spice bomb" },
-        { name: "Cheese Blast Crust & Chilly Special", subCat: "Cheese Blast", price: "₹159", bogo: true, spice: 3, desc: "Premium signature loaded" }
+    cheeseBurst: [
+        { name: "Cheese Burst Aloo Tikki", subCat: "Premium", price: "₹129", bogo: true, spice: 2, desc: "Molten cheese overload with crispy tikki" },
+        { name: "Cheese Burst Peri Peri", subCat: "Premium", price: "₹139", bogo: true, spice: 3, desc: "Spicy peri peri meets oozing cheese" },
+        { name: "Cheese Burst Tandoori", subCat: "Premium", price: "₹139", bogo: true, spice: 3, desc: "Smoky tandoori cheese delight" },
+        { name: "Cheese Burst Achari Masti", subCat: "Premium", price: "₹139", bogo: true, spice: 3, desc: "Tangy pickle cheese fusion" },
+        { name: "Cheese Burst Spicy Schezwan", subCat: "Premium", price: "₹149", bogo: true, spice: 3, desc: "Cheesy schezwan magic" },
+        { name: "Cheese Burst Hot & Spicy Chilli Garlic", subCat: "Premium", price: "₹149", bogo: true, spice: 3, desc: "Ultimate spice cheese bomb" },
+        { name: "Cheese Burst Crust & Chilly Special", subCat: "Premium", price: "₹159", bogo: true, spice: 3, desc: "Premium signature cheese loaded" }
+    ],
+    slice: [
+        { name: "Butter Slice", subCat: "Classic", price: "₹29", bogo: false, spice: 0, desc: "Simple buttery bliss" },
+        { name: "Sing Sev Slice", subCat: "Classic", price: "₹35", bogo: false, spice: 1, desc: "Crunchy Gujarati style" },
+        { name: "Jam Slice", subCat: "Classic", price: "₹39", bogo: false, spice: 0, desc: "Sweet fruity delight" },
+        { name: "Chocolate Slice", subCat: "Classic", price: "₹39", bogo: false, spice: 0, desc: "Sweet chocolate love" },
+        { name: "Cheese Slice", subCat: "Classic", price: "₹39", bogo: false, spice: 0, desc: "Melted cheese perfection" },
+        { name: "Cheese Chutney Slice", subCat: "Classic", price: "₹49", bogo: false, spice: 2, desc: "Cheesy with green chutney" },
+        { name: "Cheese Jam Slice", subCat: "Classic", price: "₹49", bogo: false, spice: 0, desc: "Sweet cheese fusion" },
+        { name: "Cheese Chocolate Slice", subCat: "Classic", price: "₹49", bogo: false, spice: 0, desc: "Sweet & savory combo" }
     ],
     sandwich: [
         { name: "Veg Sandwich", subCat: "Classic", price: "₹79", bogo: false, spice: 1, desc: "Loaded with fresh veggies" },
@@ -65,87 +81,130 @@ const menuData = {
         { name: "Afghani Sandwich", subCat: "Signature", price: "₹189", bogo: true, spice: 2, desc: "Creamy afghani style" },
         { name: "Achari Masti Sandwich", subCat: "Signature", price: "₹189", bogo: true, spice: 3, desc: "Pickled paradise" },
         { name: "Makhani Sandwich", subCat: "Signature", price: "₹189", bogo: true, spice: 2, desc: "Rich buttery makhani" },
-        { name: "Hot & Spicy Chilly Garlic Sandwich", subCat: "Signature", price: "₹189", bogo: true, spice: 3, desc: "Chilli garlic explosion" },
+        { name: "Hot & Spicy Chilli Garlic Sandwich", subCat: "Signature", price: "₹189", bogo: true, spice: 3, desc: "Chilli garlic explosion" },
         { name: "Tandoori Paneer Sandwich", subCat: "Premium", price: "₹199", bogo: true, spice: 3, desc: "Grilled paneer perfection" },
         { name: "Peri Peri Paneer Sandwich", subCat: "Premium", price: "₹199", bogo: true, spice: 3, desc: "Spicy paneer delight" },
         { name: "Afghani Garlic Paneer Sandwich", subCat: "Premium", price: "₹209", bogo: true, spice: 2, desc: "Garlic paneer creamy heaven" },
         { name: "Spicy Schezwan Paneer Sandwich", subCat: "Premium", price: "₹209", bogo: true, spice: 3, desc: "Indo-Chinese paneer" },
         { name: "Crust & Chilly Premium Sandwich", subCat: "Premium", price: "₹219", bogo: true, spice: 3, desc: "Our signature masterpiece" }
     ],
-    slice: [
-        { name: "Butter Slice", subCat: "Classic", price: "₹29", bogo: false, spice: 0, desc: "Simple buttery bliss" },
-        { name: "Sing Sev Slice", subCat: "Classic", price: "₹35", bogo: false, spice: 1, desc: "Crunchy Gujarati style" },
-        { name: "Jam Slice", subCat: "Classic", price: "₹39", bogo: false, spice: 0, desc: "Sweet fruity delight" },
-        { name: "Chocolate Slice", subCat: "Classic", price: "₹39", bogo: false, spice: 0, desc: "Sweet chocolate love" },
-        { name: "Cheese Slice", subCat: "Classic", price: "₹39", bogo: false, spice: 0, desc: "Melted cheese perfection" },
-        { name: "Cheese Chutney Slice", subCat: "Classic", price: "₹49", bogo: false, spice: 2, desc: "Cheesy with green chutney" },
-        { name: "Cheese Jam Slice", subCat: "Classic", price: "₹49", bogo: false, spice: 0, desc: "Sweet cheese fusion" },
-        { name: "Cheese Chocolate Slice", subCat: "Classic", price: "₹49", bogo: false, spice: 0, desc: "Sweet & savory combo" }
-    ],
     frankie: [
         { name: "Veg Delight Frankie", subCat: "Classic", price: "₹129", bogo: false, spice: 1, desc: "Rolled veggie goodness" },
         { name: "Corn Delight Frankie", subCat: "Classic", price: "₹139", bogo: false, spice: 1, desc: "Sweet corn wrap" },
-        { name: "Paneer Delight Frankie", subCat: "Signature", price: "₹139", bogo: false, spice: 2, desc: "Paneer wrapped joy" },
-        { name: "Cheese Chilly Paneer Frankie", subCat: "Signature", price: "₹149", bogo: false, spice: 3, desc: "Cheesy chilli paneer" },
-        { name: "Cheese Chilly Corn Frankie", subCat: "Signature", price: "₹149", bogo: false, spice: 2, desc: "Cheesy corn spice" },
+        { name: "Paneer Delight Frankie", subCat: "Classic", price: "₹139", bogo: false, spice: 2, desc: "Paneer wrapped joy" },
+        { name: "Cheese Chilli Paneer Frankie", subCat: "Signature", price: "₹149", bogo: false, spice: 3, desc: "Cheesy chilli paneer roll" },
+        { name: "Cheese Chilli Corn Frankie", subCat: "Signature", price: "₹149", bogo: false, spice: 2, desc: "Cheesy corn spice wrap" },
         { name: "Tandoori Frankie", subCat: "Signature", price: "₹169", bogo: false, spice: 3, desc: "Smoky tandoori roll" },
-        { name: "Peri Peri Frankie", subCat: "Signature", price: "₹169", bogo: false, spice: 3, desc: "Fiery peri wrap" },
-        { name: "Crust & Chilly Special Frankie", subCat: "Premium", price: "₹189", bogo: false, spice: 3, desc: "Our signature roll" }
+        { name: "Peri Peri Frankie", subCat: "Signature", price: "₹169", bogo: false, spice: 3, desc: "Fiery peri peri wrap" },
+        { name: "Crust & Chilly Special Frankie", subCat: "Premium", price: "₹189", bogo: false, spice: 3, desc: "Our signature special roll" }
     ],
     tikka: [
-        { name: "Veg Delight Tikka Pav", subCat: "Classic", price: "₹129", bogo: false, spice: 1, desc: "Veggie tikka pav" },
-        { name: "Makhni Tikka Pav", subCat: "Classic", price: "₹139", bogo: false, spice: 2, desc: "Buttery makhani tikka" },
-        { name: "Pizzeria Tikka Pav", subCat: "Signature", price: "₹159", bogo: true, spice: 2, desc: "Pizza style tikka" },
+        { name: "Veg Delight Tikka Pav", subCat: "Classic", price: "₹129", bogo: false, spice: 1, desc: "Veggie tikka with fresh pav" },
+        { name: "Makhani Tikka Pav", subCat: "Classic", price: "₹139", bogo: false, spice: 2, desc: "Buttery makhani tikka" },
+        { name: "Pizzeria Tikka Pav", subCat: "Signature", price: "₹159", bogo: true, spice: 2, desc: "Pizza style tikka pav" },
         { name: "1000 Island Tikka Pav", subCat: "Signature", price: "₹159", bogo: true, spice: 1, desc: "Creamy island tikka" },
         { name: "Achari Masti Tikka Pav", subCat: "Signature", price: "₹169", bogo: true, spice: 3, desc: "Pickled tikka delight" },
-        { name: "Spicy Schezwan Tikka Pav", subCat: "Signature", price: "₹169", bogo: true, spice: 3, desc: "Schezwan fusion" },
+        { name: "Spicy Schezwan Tikka Pav", subCat: "Signature", price: "₹169", bogo: true, spice: 3, desc: "Schezwan fusion tikka" },
         { name: "Indian Style Tikka Pav", subCat: "Signature", price: "₹169", bogo: true, spice: 3, desc: "Desi tikka special" },
         { name: "Tandoori Tikka Pav", subCat: "Premium", price: "₹179", bogo: true, spice: 3, desc: "Smoky tandoori bites" },
-        { name: "Peri Peri Tikka Pav", subCat: "Premium", price: "₹179", bogo: true, spice: 3, desc: "Spicy peri tikka" },
+        { name: "Peri Peri Tikka Pav", subCat: "Premium", price: "₹179", bogo: true, spice: 3, desc: "Spicy peri peri tikka" },
         { name: "Afghani Garlic Tikka Pav", subCat: "Premium", price: "₹189", bogo: true, spice: 2, desc: "Creamy garlic tikka" },
-        { name: "Hot & Spicy Chilly Garlic Tikka Pav", subCat: "Premium", price: "₹179", bogo: true, spice: 3, desc: "Extra spicy tikka" },
-        { name: "Crust & Chilly Special Tikka Pav", subCat: "Premium", price: "₹199", bogo: true, spice: 3, desc: "Signature tikka pav" }
+        { name: "Hot & Spicy Chilli Garlic Tikka Pav", subCat: "Premium", price: "₹179", bogo: true, spice: 3, desc: "Extra spicy chilli garlic tikka" },
+        { name: "Crust & Chilly Special Tikka Pav", subCat: "Premium", price: "₹199", bogo: true, spice: 3, desc: "Signature tikka pav masterpiece" }
     ],
     fries: [
         { name: "Golden Fries", subCat: "Classic", price: "₹79", bogo: false, spice: 0, desc: "Crispy golden delight" },
-        { name: "Peri Peri Fries", subCat: "Signature", price: "₹99", bogo: false, spice: 3, desc: "Fiery peri seasoning" },
+        { name: "Peri Peri Fries", subCat: "Signature", price: "₹99", bogo: false, spice: 3, desc: "Fiery peri peri seasoning" },
         { name: "Cheesy Loaded Fries", subCat: "Premium", price: "₹119", bogo: false, spice: 1, desc: "Cheese loaded heaven" }
     ],
     maggi: [
-        { name: "Masala Maggi", subCat: "Classic", price: "₹59", bogo: false, spice: 1, desc: "Nostalgic favorite" },
-        { name: "Tadka Maggi", subCat: "Classic", price: "₹79", bogo: false, spice: 2, desc: "Extra tadka flavor" },
-        { name: "Veg Loaded Maggi", subCat: "Signature", price: "₹89", bogo: false, spice: 2, desc: "Loaded with veggies" },
-        { name: "Cheese Blast Maggi", subCat: "Premium", price: "₹99", bogo: false, spice: 1, desc: "Cheesy noodle bliss" },
-        { name: "Cheese Blast Tadka Maggi", subCat: "Premium", price: "₹109", bogo: false, spice: 2, desc: "Cheesy spicy tadka" },
-        { name: "Cheese Blast Veg Loaded Maggi", subCat: "Premium", price: "₹119", bogo: false, spice: 2, desc: "Ultimate loaded maggi" }
+        { name: "Classic Masala Maggi", subCat: "Classic", price: "₹59", bogo: false, spice: 1, desc: "Nostalgic masala favorite" },
+        { name: "Tadka Maggi", subCat: "Classic", price: "₹79", bogo: false, spice: 2, desc: "Extra tadka flavor kick" },
+        { name: "Veg Loaded Maggi", subCat: "Signature", price: "₹89", bogo: false, spice: 2, desc: "Loaded with fresh veggies" },
+        { name: "Cheese Burst Maggi", subCat: "Premium", price: "₹99", bogo: false, spice: 1, desc: "Cheesy noodle bliss" },
+        { name: "Cheese Burst Tadka Maggi", subCat: "Premium", price: "₹109", bogo: false, spice: 2, desc: "Cheesy spicy tadka noodles" },
+        { name: "Cheese Burst Veg Loaded Maggi", subCat: "Premium", price: "₹119", bogo: false, spice: 2, desc: "Ultimate loaded cheesy maggi" }
     ],
     mojitos: [
         { name: "Mint Mojito", subCat: "Refreshing", price: "₹99", bogo: false, spice: 0, desc: "Classic fresh mint mojito" },
         { name: "Blue Lagoon Mojito", subCat: "Refreshing", price: "₹99", bogo: false, spice: 0, desc: "Cool blue refreshment" },
         { name: "Blue Berry Mojito", subCat: "Refreshing", price: "₹99", bogo: false, spice: 0, desc: "Sweet blueberry twist" },
-        { name: "Green Apple Mojito", subCat: "Refreshing", price: "₹99", bogo: false, spice: 0, desc: "Tangy apple twist" }
+        { name: "Green Apple Mojito", subCat: "Refreshing", price: "₹99", bogo: false, spice: 0, desc: "Tangy green apple twist" }
+    ],
+    addons: [
+        { name: "Extra Paneer", subCat: "Add-on", price: "Ask", bogo: false, spice: 0, desc: "Add extra paneer to any dish" },
+        { name: "Extra Cheese", subCat: "Add-on", price: "Ask", bogo: false, spice: 0, desc: "Add extra cheese layer" },
+        { name: "Extra Veggies", subCat: "Add-on", price: "Ask", bogo: false, spice: 0, desc: "Add extra fresh vegetables" },
+        { name: "Extra Tikki", subCat: "Add-on", price: "Ask", bogo: false, spice: 1, desc: "Add extra crispy tikki" },
+        { name: "Cheese Tikki", subCat: "Add-on", price: "Ask", bogo: false, spice: 1, desc: "Add cheesy tikki patty" }
+    ],
+    drinks: [
+        { name: "Coca-Cola", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Chilled classic Coca-Cola" },
+        { name: "Thums Up", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Bold Thums Up taste" },
+        { name: "Sprite", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Refreshing lemon-lime Sprite" },
+        { name: "Fanta", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Orange Fanta fizz" },
+        { name: "Limca", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Lemony Limca refresher" },
+        { name: "Maaza", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Mango Maaza treat" },
+        { name: "Bottled Water", subCat: "Cold Drink", price: "MRP", bogo: false, spice: 0, desc: "Pure bottled water" }
     ]
 };
 
+// ==================
+// STATE
+// ==================
 let currentCategory = 'burgers';
 let currentFilter = 'all';
 let currentSearch = '';
 
+// ==================
 // LOADER
+// ==================
 window.addEventListener('load', () => {
     setTimeout(() => {
-        document.getElementById('loader').classList.add('hide');
-        setTimeout(checkCounters, 300);
-    }, 1500);
+        const loader = $('loader');
+        if (loader) {
+            loader.classList.add('hide');
+            setTimeout(() => {
+                if (loader && loader.parentNode) loader.remove();
+                checkCounters();
+            }, 600);
+        }
+    }, 1200);
 });
 
+// ==================
+// SMOOTH SCROLL
+// ==================
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId.length < 2) return;
+            
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                const navbar = document.querySelector('.navbar');
+                const navHeight = navbar ? navbar.offsetHeight : 70;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 15;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
+
+// ==================
 // LIVE STATUS
+// ==================
 function updateLiveStatus() {
-    const now = new Date();
-    const hour = now.getHours();
-    const statusEl = document.getElementById('liveStatus');
+    const statusEl = $('liveStatus');
     if (!statusEl) return;
     
+    const hour = new Date().getHours();
     if (hour >= 11 && hour < 24) {
         statusEl.textContent = 'Open Now';
         statusEl.style.color = '#00A651';
@@ -157,19 +216,19 @@ function updateLiveStatus() {
 updateLiveStatus();
 setInterval(updateLiveStatus, 60000);
 
-function vegBadgeHTML() {
-    return `<div class="card-veg-mark"><span class="veg-square"><span class="veg-circle"></span></span></div>`;
-}
-
+// ==================
 // LOAD MENU
+// ==================
 function loadMenu() {
-    const grid = document.getElementById('menuGrid');
-    const countEl = document.getElementById('menuCount');
+    const grid = $('menuGrid');
+    const countEl = $('menuCount');
+    if (!grid) return;
+    
     let items = menuData[currentCategory] || [];
     
     if (currentFilter === 'bogo') items = items.filter(i => i.bogo);
-    if (currentFilter === 'spicy') items = items.filter(i => i.spice >= 3);
-    if (currentFilter === 'mild') items = items.filter(i => i.spice <= 1);
+    else if (currentFilter === 'spicy') items = items.filter(i => i.spice >= 3);
+    else if (currentFilter === 'mild') items = items.filter(i => i.spice <= 1);
     
     if (currentSearch) {
         items = items.filter(i => 
@@ -187,61 +246,75 @@ function loadMenu() {
                 <p>Try changing your filter or search term</p>
             </div>
         `;
-        countEl.textContent = '';
+        if (countEl) countEl.textContent = '';
         return;
     }
     
-    grid.innerHTML = items.map((item, index) => {
+    const html = items.map((item, index) => {
         const spiceIcons = '🌶️'.repeat(item.spice);
+        const priceClass = (item.price === 'Ask' || item.price === 'MRP') ? 'price price-ask' : 'price';
+        
         return `
-        <div class="menu-card" style="animation-delay: ${index * 0.05}s">
+        <div class="menu-card" style="animation-delay:${Math.min(index * 0.04, 0.4)}s">
             ${vegBadgeHTML()}
             ${item.bogo ? '<span class="bogo-badge">🎁 BOGO</span>' : ''}
-            <span class="sub-cat">${item.subCat}</span>
+            <span class="sub-cat">${escapeHtml(item.subCat)}</span>
             <div class="menu-card-header">
-                <h4>${item.name}</h4>
-                <span class="price">${item.price}</span>
+                <h4>${escapeHtml(item.name)}</h4>
+                <span class="${priceClass}">${escapeHtml(item.price)}</span>
             </div>
-            <p>${item.desc}</p>
+            <p>${escapeHtml(item.desc)}</p>
             <div class="menu-card-footer">
-                <div class="spice-level">${spiceIcons || '❄️'}</div>
-                <a href="tel:9664870840" class="order-btn">
+                <div class="spice-level" aria-label="Spice level ${item.spice}">${spiceIcons || '❄️'}</div>
+                <a href="tel:9664870840" class="order-btn" aria-label="Order ${escapeHtml(item.name)}">
                     Order <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-        </div>
-        `;
+        </div>`;
     }).join('');
     
-    countEl.textContent = `Showing ${items.length} delicious ${items.length === 1 ? 'item' : 'items'}`;
+    grid.innerHTML = html;
+    
+    if (countEl) {
+        countEl.textContent = `Showing ${items.length} delicious ${items.length === 1 ? 'item' : 'items'}`;
+    }
 }
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
+// ==================
+// MENU EVENTS
+// ==================
+$$('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        $$('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentCategory = btn.dataset.category;
         loadMenu();
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
 });
 
-document.querySelectorAll('.filter-chip').forEach(chip => {
+$$('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        $$('.filter-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         currentFilter = chip.dataset.filter;
         loadMenu();
     });
 });
 
-document.getElementById('menuSearch').addEventListener('input', (e) => {
-    currentSearch = e.target.value.toLowerCase().trim();
-    loadMenu();
-});
+const menuSearch = $('menuSearch');
+if (menuSearch) {
+    menuSearch.addEventListener('input', debounce((e) => {
+        currentSearch = e.target.value.toLowerCase().trim();
+        loadMenu();
+    }, 250));
+}
 
 loadMenu();
 
+// ==================
 // STATS COUNTER
+// ==================
 function animateCounter(element, target, duration = 2000) {
     const startTime = performance.now();
     function update(currentTime) {
@@ -257,7 +330,7 @@ function animateCounter(element, target, duration = 2000) {
 
 let countersStarted = false;
 function checkCounters() {
-    const stats = document.querySelectorAll('.hs-num');
+    const stats = $$('.hs-num');
     if (!stats.length || countersStarted) return;
     
     const rect = stats[0].getBoundingClientRect();
@@ -265,109 +338,334 @@ function checkCounters() {
         countersStarted = true;
         stats.forEach(stat => {
             const target = parseInt(stat.dataset.count);
-            animateCounter(stat, target);
+            if (!isNaN(target)) animateCounter(stat, target);
         });
     }
 }
 
-window.addEventListener('scroll', checkCounters);
-
-// MOBILE MENU
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('navMenu');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
-
-// NAVBAR SCROLL
-window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    const backTop = document.getElementById('backTop');
+if ('IntersectionObserver' in window) {
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !countersStarted) {
+                countersStarted = true;
+                $$('.hs-num').forEach(stat => {
+                    const target = parseInt(stat.dataset.count);
+                    if (!isNaN(target)) animateCounter(stat, target);
+                });
+                statsObserver.disconnect();
+            }
+        });
+    }, { threshold: 0.3 });
     
-    if (window.scrollY > 80) {
-        navbar.classList.add('scrolled');
-        backTop.classList.add('show');
-    } else {
-        navbar.classList.remove('scrolled');
-        backTop.classList.remove('show');
+    const firstStat = document.querySelector('.hs-num');
+    if (firstStat) statsObserver.observe(firstStat);
+} else {
+    window.addEventListener('scroll', checkCounters, { passive: true });
+}
+
+// ==================
+// MOBILE MENU - GUARANTEED FIX
+// ==================
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
+    const navMenuClose = document.getElementById('navMenuClose');
+    
+    console.log('Hamburger found:', hamburger); // Debug
+    console.log('NavMenu found:', navMenu); // Debug
+    
+    function closeMenu() {
+        if (hamburger) hamburger.classList.remove('active');
+        if (navMenu) navMenu.classList.remove('active');
+        if (navOverlay) navOverlay.classList.add('hidden-overlay');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+    }
+    
+    function openMenu() {
+        if (hamburger) hamburger.classList.add('active');
+        if (navMenu) navMenu.classList.add('active');
+        if (navOverlay) navOverlay.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function toggleMenu(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        if (hamburger && hamburger.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    }
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            toggleMenu(e);
+        });
+    }
+    
+    // Close on nav link click
+    document.querySelectorAll('.nav-menu .nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            setTimeout(closeMenu, 150);
+        });
+    });
+    
+    // Close on overlay click
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMenu);
+    }
+    
+    // Close button
+    if (navMenuClose) {
+        navMenuClose.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMenu();
+        });
+    }
+    
+    // ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || e.keyCode === 27) closeMenu();
+    });
+    
+    // Mobile CTA buttons
+    const mobileCta = document.querySelector('.mobile-cta-btn');
+    if (mobileCta) {
+        mobileCta.addEventListener('click', function() {
+            setTimeout(closeMenu, 150);
+        });
+    }
+    
+    const mobileWa = document.querySelector('.mobile-wa-btn');
+    if (mobileWa) {
+        mobileWa.addEventListener('click', function() {
+            setTimeout(closeMenu, 150);
+        });
     }
 });
 
-document.getElementById('backTop').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+// ==================
+// NAVBAR SCROLL
+// ==================
+const navbar = $('navbar');
+const backTopBtn = $('backTop');
+let ticking = false;
 
-// REVIEWS SLIDER
-const track = document.getElementById('reviewsTrack');
-const dotsContainer = document.getElementById('reviewDots');
-const cards = document.querySelectorAll('.review-card');
-let currentReview = 0;
+function handleScroll() {
+    const scrollY = window.scrollY;
+    
+    if (navbar) {
+        if (scrollY > 60) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+    }
+    
+    if (backTopBtn) {
+        if (scrollY > 400) backTopBtn.classList.add('show');
+        else backTopBtn.classList.remove('show');
+    }
+    
+    ticking = false;
+}
 
-cards.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'review-dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => goToReview(i));
-    dotsContainer.appendChild(dot);
-});
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+    }
+}, { passive: true });
 
-function goToReview(index) {
-    currentReview = index;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    document.querySelectorAll('.review-dot').forEach((d, i) => {
-        d.classList.toggle('active', i === index);
+if (backTopBtn) {
+    backTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
 
-document.getElementById('prevReview').addEventListener('click', () => {
-    currentReview = (currentReview - 1 + cards.length) % cards.length;
-    goToReview(currentReview);
-});
+// ==================
+// REVIEWS SLIDER
+// ==================
+const track = $('reviewsTrack');
+const dotsContainer = $('reviewDots');
+const cards = $$('.review-card');
+let currentReview = 0;
+let reviewInterval;
 
-document.getElementById('nextReview').addEventListener('click', () => {
-    currentReview = (currentReview + 1) % cards.length;
-    goToReview(currentReview);
-});
+if (track && dotsContainer && cards.length > 0) {
+    cards.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Go to review ${i + 1}`);
+        dot.addEventListener('click', () => {
+            goToReview(i);
+            resetAutoplay();
+        });
+        dotsContainer.appendChild(dot);
+    });
+    
+    function goToReview(index) {
+        currentReview = index;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        $$('.review-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === index);
+        });
+    }
+    
+    const prevBtn = $('prevReview');
+    const nextBtn = $('nextReview');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentReview = (currentReview - 1 + cards.length) % cards.length;
+            goToReview(currentReview);
+            resetAutoplay();
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentReview = (currentReview + 1) % cards.length;
+            goToReview(currentReview);
+            resetAutoplay();
+        });
+    }
+    
+    function startAutoplay() {
+        reviewInterval = setInterval(() => {
+            currentReview = (currentReview + 1) % cards.length;
+            goToReview(currentReview);
+        }, 5000);
+    }
+    
+    function resetAutoplay() {
+        clearInterval(reviewInterval);
+        startAutoplay();
+    }
+    
+    startAutoplay();
+    
+    const reviewsSlider = document.querySelector('.reviews-slider');
+    if (reviewsSlider) {
+        reviewsSlider.addEventListener('mouseenter', () => clearInterval(reviewInterval));
+        reviewsSlider.addEventListener('mouseleave', startAutoplay);
+    }
+    
+    // Touch swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    track.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    track.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                currentReview = (currentReview + 1) % cards.length;
+            } else {
+                currentReview = (currentReview - 1 + cards.length) % cards.length;
+            }
+            goToReview(currentReview);
+            resetAutoplay();
+        }
+    }
+}
 
-setInterval(() => {
-    currentReview = (currentReview + 1) % cards.length;
-    goToReview(currentReview);
-}, 5000);
-
+// ==================
 // FAQ ACCORDION
-document.querySelectorAll('.faq-question').forEach(q => {
+// ==================
+$$('.faq-question').forEach(q => {
     q.addEventListener('click', () => {
         const item = q.parentElement;
         const isActive = item.classList.contains('active');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-        if (!isActive) item.classList.add('active');
+        
+        $$('.faq-item').forEach(i => {
+            i.classList.remove('active');
+            const btn = i.querySelector('.faq-question');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+        
+        if (!isActive) {
+            item.classList.add('active');
+            q.setAttribute('aria-expanded', 'true');
+        }
     });
 });
 
-// FORMS
-document.getElementById('reservationForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const date = document.getElementById('date').value;
-    const guests = document.getElementById('guests').value;
-    const msg = document.getElementById('message').value;
-    
-    const whatsappMsg = `Hello Crust & Chilly! 🍔%0A%0A👤 Name: ${name}%0A📞 Phone: ${phone}%0A📅 Date: ${date}%0A👥 Guests/Order Size: ${guests}%0A📝 Message: ${msg || 'None'}`;
-    
-    window.open(`https://wa.me/919664870840?text=${whatsappMsg}`, '_blank');
-    e.target.reset();
-    alert('✅ Redirecting to WhatsApp!');
-});
+// ==================
+// RESERVATION FORM
+// ==================
+const reservationForm = $('reservationForm');
+if (reservationForm) {
+    reservationForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        try {
+            const name = $('name')?.value?.trim() || '';
+            const phone = $('phone')?.value?.trim() || '';
+            const date = $('date')?.value || '';
+            const guests = $('guests')?.value || '';
+            const msg = $('message')?.value?.trim() || 'None';
+            
+            if (!name) {
+                alert('⚠️ Please enter your name.');
+                $('name')?.focus();
+                return;
+            }
+            
+            if (!phone || phone.length < 10) {
+                alert('⚠️ Please enter a valid phone number.');
+                $('phone')?.focus();
+                return;
+            }
+            
+            const whatsappMsg = 
+                `Hello Crust & Chilly! 🍔%0A%0A` +
+                `👤 Name: ${encodeURIComponent(name)}%0A` +
+                `📞 Phone: ${encodeURIComponent(phone)}%0A` +
+                `📅 Date: ${encodeURIComponent(date)}%0A` +
+                `👥 Guests/Order Size: ${encodeURIComponent(guests)}%0A` +
+                `📝 Message: ${encodeURIComponent(msg)}`;
+            
+            window.open(`https://wa.me/919664870840?text=${whatsappMsg}`, '_blank');
+            e.target.reset();
+            
+            const dateEl = $('date');
+            if (dateEl) dateEl.min = new Date().toISOString().split('T')[0];
+            
+            alert('✅ Redirecting to WhatsApp!');
+        } catch (err) {
+            console.error(err);
+            alert('❌ Something went wrong. Please call +91 96648 70840');
+        }
+    });
+}
 
-document.getElementById('date').min = new Date().toISOString().split('T')[0];
+const dateInput = $('date');
+if (dateInput) {
+    dateInput.min = new Date().toISOString().split('T')[0];
+}
 
-console.log('🔥 Crust & Chilly Premium Loaded! 79 Dishes • 100% Pure Veg • Open till 12 AM 🌱');
+// ==================
+// PREVENT HORIZONTAL SCROLL
+// ==================
+window.addEventListener('scroll', () => {
+    if (window.scrollX !== 0) {
+        window.scrollTo(0, window.scrollY);
+    }
+}, { passive: true });

@@ -1,65 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-    
+
     <url>
         <loc>https://crustandchilly.aitoolcor.com/</loc>
-        <lastmod>2025-01-15</lastmod>
+        <lastmod>2025-07-09</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <image:image>
             <image:loc>https://crustandchilly.aitoolcor.com/images/logo.png</image:loc>
-            <image:title>Crust & Chilly Logo</image:title>
+            <image:title>Crust &amp; Chilly - Premium Veg Restaurant Shela Ahmedabad</image:title>
+            <image:caption>Logo of Crust &amp; Chilly Premium Vegetarian Restaurant</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://crustandchilly.aitoolcor.com/images/og.jpg</image:loc>
+            <image:title>Crust &amp; Chilly Restaurant - 90+ Hand-Crafted Vegetarian Dishes</image:title>
+            <image:caption>90+ premium vegetarian dishes at Crust &amp; Chilly</image:caption>
         </image:image>
     </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#home</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#about</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#menu</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#combo</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#gallery</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#reviews</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    
-    <url>
-        <loc>https://crustandchilly.aitoolcor.com/#contact</loc>
-        <lastmod>2025-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
+
 </urlset>

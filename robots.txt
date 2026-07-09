@@ -1,20 +1,36 @@
+# Crust & Chilly - Premium Veg Restaurant
+# https://crustandchilly.aitoolcor.com
+
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
+Allow: /images/
+Allow: /style.css
+Allow: /script.js
+Allow: /manifest.json
 
+# Sitemap Location
 Sitemap: https://crustandchilly.aitoolcor.com/sitemap.xml
 
-Crawl-delay: 1
-
+# Google
 User-agent: Googlebot
 Allow: /
 
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Bing
 User-agent: Bingbot
 Allow: /
 
+# Social Media Crawlers
 User-agent: facebookexternalhit
 Allow: /
 
 User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
 Allow: /
